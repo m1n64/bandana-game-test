@@ -20,13 +20,14 @@ services:
       XDEBUG_MODE: 'debug'
       XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
       IGNITION_LOCAL_SITES_PATH: '${PWD}'
+      DB_CONNECTION: 'pgsql'
       DB_HOST: db
       DB_PORT: 5432
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
       REDIS_HOST: redis
     volumes:
-      - './backend:/var/www/html'
+      - ./backend:/var/www/html:cached
     env_file: ./backend/.env
     depends_on:
       - db
