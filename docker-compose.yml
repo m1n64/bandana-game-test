@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  app:
+    env_file:
+      - ./backend/.env
+    build:
+      context: ./backend
+      dockerfile: ./docker/app/Dockerfile
+      target: production
+    container_name: spincash
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+      - ./backend/docker/app/php.ini:/usr/local/etc/php/php.ini
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - REDIS_HOST=redis
+    depends_on:
+      - db
+      - redis
+
+  db:
+    env_file:
+      - ./backend/.env
+    image: postgres:latest
+    container_name: spincash_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./backend/db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    env_file:
+      - ./backend/.env
+    image: redis:alpine
+    container_name: spincash_redis
+    volumes:
+      - ./backend/redis:/data
+    ports:
+      - "6379:6379"
+
+  centrifugo:
+    env_file:
+      - ./backend/.env
+    image: centrifugo/centrifugo:v3
+    container_name: spincash_centrifugo
+    command: centrifugo
+    environment:
+      - CENTRIFUGO_SECRET=${CENTRIFUGO_SECRET}
+      - CENTRIFUGO_TOKEN_HMAC_SECRET_KEY=${CENTRIFUGO_TOKEN_SECRET}
+      - CENTRIFUGO_ADMIN=false
+      - CENTRIFUGO_API_KEY=${CENTRIFUGO_API_KEY}
+    ports:
+      - "8001:8001"
+
+volumes:
+  database_data:
+  redis_data:
