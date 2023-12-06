@@ -4,7 +4,20 @@ namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Schema(
+ *      schema="Unauthorized",
+ *      title="Unauthorized",
+ *      @OA\Property(
+ *          property="message",
+ *          title="Message",
+ *          type="string",
+ *          example="Unauthorized"
+ *      )
+ *  )
+*/
 class Authenticate extends Middleware
 {
     /**

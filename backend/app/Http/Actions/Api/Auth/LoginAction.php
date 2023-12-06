@@ -9,6 +9,7 @@ use App\Http\Responses\Auth\AuthResponse;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use OpenApi\Annotations as OA;
 
 class LoginAction
 {
@@ -22,6 +23,28 @@ class LoginAction
     }
 
     /**
+     * @OA\Post(
+     *       path="/auth/login",
+     *       operationId="login",
+     *       tags={"Auth"},
+     *       summary="Login",
+     *       description="Login",
+     *       @OA\RequestBody(
+     *           required=true,
+     *           description="Data for login",
+     *           @OA\JsonContent(ref="#/components/schemas/LoginRequest")
+     *       ),
+     *       @OA\Response(
+     *           response=200,
+     *           description="Successful",
+     *           @OA\JsonContent(ref="#/components/schemas/AuthSuccess")
+     *        ),
+     *       @OA\Response(
+     *           response=401,
+     *           description="Error",
+     *           @OA\JsonContent(ref="#/components/schemas/AuthError")
+     *       )
+     *      )
      * @param LoginDto $loginDto
      * @return JsonResponse
      */

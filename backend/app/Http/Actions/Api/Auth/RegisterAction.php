@@ -9,6 +9,7 @@ use App\Http\Responses\Auth\AuthResponse;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
+use OpenApi\Annotations as OA;
 
 class RegisterAction
 {
@@ -22,6 +23,23 @@ class RegisterAction
     }
 
     /**
+     * @OA\Post(
+     *        path="/auth/register",
+     *        operationId="register",
+     *        tags={"Auth"},
+     *        summary="Register",
+     *        description="Register",
+     *        @OA\RequestBody(
+     *            required=true,
+     *            description="Data for register",
+     *            @OA\JsonContent(ref="#/components/schemas/RegisterRequest")
+     *        ),
+     *        @OA\Response(
+     *            response=200,
+     *            description="Successful",
+     *            @OA\JsonContent(ref="#/components/schemas/AuthSuccess")
+     *         )
+     *       )
      * @param RegisterDto $registerDto
      * @return JsonResponse
      */
