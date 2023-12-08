@@ -19,6 +19,8 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
 });
 
+Route::get("/user/jwt", [\App\Http\Controllers\Api\UserController::class, 'generateJwt']);
+
 Route::group(['prefix' => 'user', 'middleware' => ['auth:sanctum']], function () {
     Route::get('/', [\App\Http\Controllers\Api\UserController::class, 'info']);
 });

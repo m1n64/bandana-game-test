@@ -58,15 +58,18 @@ services:
 
   centrifugo:
     env_file: ./backend/.env
-    image: centrifugo/centrifugo:v3
+    image: centrifugo/centrifugo:v5
     container_name: spincash_centrifugo
-    command: centrifugo
+    command: centrifugo -c config.json
+    volumes:
+      - ./backend/docker/centrifugo/config.json:/centrifugo/config.json
     environment:
-      - CENTRIFUGO_SECRET=${CENTRIFUGO_SECRET}
-      - CENTRIFUGO_TOKEN_HMAC_SECRET_KEY=${CENTRIFUGO_TOKEN_SECRET}
+      #- CENTRIFUGO_SECRET=${CENTRIFUGO_SECRET}
+      # - CENTRIFUGO_TOKEN_HMAC_SECRET_KEY=${CENTRIFUGO_TOKEN_SECRET}
       - CENTRIFUGO_ADMIN=false
-      - CENTRIFUGO_API_KEY=${CENTRIFUGO_API_KEY}
+      # - CENTRIFUGO_API_KEY=${CENTRIFUGO_API_KEY}
     ports:
+      - "8000:8000"
       - "8001:8001"
 
   adminer:

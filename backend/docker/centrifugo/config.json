@@ -1,0 +1,18 @@
+{
+    "port": 8000,
+    "engine": "memory",
+    "log_level": "debug",
+    "anonymous": true,
+    "insecure": true,
+    "client_insecure": true,
+    "api_insecure": true,
+    "allow_publish_for_client": true,
+    "allow_publish_for_subscriber": true,
+    "allow_subscribe_for_anonymous": true,
+    "allow_publish_for_anonymous": true,
+    "watch": true,
+    "presence": true,
+    "join_leave": true,
+    "force_push_join_leave": true,
+    "allow_subscribe_for_client": true
+}

@@ -29,11 +29,14 @@ services:
       REDIS_HOST: redis
 
   centrifugo:
-    image: centrifugo/centrifugo:v3
+    image: centrifugo/centrifugo:v5
+    container_name: spincash_centrifugo
+    command: centrifugo -c config.json --client_insecure --api_insecure
     environment:
-      - CENTRIFUGO_SECRET=${CENTRIFUGO_SECRET}
-      - CENTRIFUGO_TOKEN_HMAC_SECRET_KEY=${CENTRIFUGO_TOKEN_SECRET}
+      #- CENTRIFUGO_SECRET=${CENTRIFUGO_SECRET}
+      # - CENTRIFUGO_TOKEN_HMAC_SECRET_KEY=${CENTRIFUGO_TOKEN_SECRET}
       - CENTRIFUGO_ADMIN_PASSWORD=${CENTRIFUGO_ADMIN_PASSWORD}
       - CENTRIFUGO_ADMIN_SECRET=${CENTRIFUGO_ADMIN_SECRET}
-      - CENTRIFUGO_API_KEY=${CENTRIFUGO_API_KEY}
+      # - CENTRIFUGO_API_KEY=${CENTRIFUGO_API_KEY}
       - CENTRIFUGO_ADMIN=true
+      - CENTRIFUGO_LOG_LEVEL=debug
